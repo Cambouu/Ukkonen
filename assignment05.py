@@ -43,12 +43,23 @@ def build_suffixtree(T):
         remaining += 1
 
         while remaining > 0:
-            if c in activeNode.children and activeLength == 0:
-                activeEdge = c
-                activeLength += 1
+            if activeLength == 0:
+                if c in activeNode.children:
+                    activeEdge = c
+                    activeLength += 1
+                else:
+                    activeNode.addChild(c, suffixStart=end)
+                    remaining -= 1
+            
             else:
-                ST.addChild(c, suffixStart=end)
-                remaining -= 1
+                edge_text = activeNode.children[activeEdge].getText(T)
+                if c == edge_text[activeLength]:
+                    activeLength += 1
+                else:
+                    activeNode.splitNode(edge=activeEdge, length=activeLength, end=end) #TODO
+                    remaining -= 1
+                    activeEdge = edge_text[1]
+
         
         leaves_count, inners_count = count_leaves_and_inners(ST)
         leaves.append(leaves_count)
