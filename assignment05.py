@@ -39,8 +39,8 @@ def build_suffixtree(T):
     - inner_nodes: list of number of inner nodes after each step
     """
     ST = Node(isRoot=True) # this should be your suffix tree
-    # leaves = []
-    # inner_nodes = []
+    #leaves = []
+    #inner_nodes = []
 
     remaining = 0
     activeNode = ST
@@ -48,6 +48,10 @@ def build_suffixtree(T):
     activeLength = 0
 
     for end, c in enumerate(T):
+        if end == len(T)-1:
+            assert c == '$', "Text should end in $"
+        else:
+            assert ord(c) >= 37, "ASCII value of character less than 37"
         remaining += 1
         lastNodeSplitted = None # Temporal to address SuffixLinks
 
@@ -74,9 +78,9 @@ def build_suffixtree(T):
                     activeLength += 1
 
                 else:
-                    childNode.splitNode(T[activeLength + childNode.suffixStart], c, activeLength, end) #FIXME
+                    childNode.splitNode(T[activeLength + childNode.suffixStart], c, activeLength, end) 
                     remaining -= 1
-                    
+
                     if lastNodeSplitted is not None:
                         lastNodeSplitted.suffixLink = childNode
                     lastNodeSplitted = childNode
@@ -86,11 +90,11 @@ def build_suffixtree(T):
                         activeLength -= 1
                     else:
                         activeNode = activeNode.suffixLink
-                    
 
-        # leaves_count, inners_count = count_leaves_and_inners(ST)
-        # leaves.append(leaves_count)
-        # inner_nodes.append(inners_count)
+
+        #leaves_count, inners_count = count_leaves_and_inners(ST)
+        #leaves.append(leaves_count)
+        #inner_nodes.append(inners_count)
 
     return ST#, leaves, inner_nodes
 
