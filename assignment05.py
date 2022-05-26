@@ -64,7 +64,8 @@ def build_suffixtree(T):
             else:
                 childNode = activeNode.children[activeEdge]
                 edge_text = childNode.getText(T, end)
-                if activeLength > len(edge_text):
+
+                if activeLength >= len(edge_text):
                     activeNode = childNode
                     activeEdge = T[activeNode.suffixStart]
                     activeLength = 0
@@ -91,7 +92,7 @@ def build_suffixtree(T):
         # leaves.append(leaves_count)
         # inner_nodes.append(inners_count)
 
-    return ST, leaves, inner_nodes
+    return ST#, leaves, inner_nodes
 
 
 def count_leaves_and_inners(node):
@@ -113,13 +114,17 @@ def count_leaves_and_inners(node):
     return leaves, inners
 
 
-def print_tree(T, ST, i=0):
+def print_tree(T, ST, end=-1, i=0):
     i += 1
+    if end == -1:
+        end = len(T)
+
     if ST.isRoot:
         print('root')
+    
     for child in ST.children.values():
-        print('{0} {1}'.format('--' * i, child.getText(T, -1)))
-        print_tree(T, child, i)
+        print('{0} {1}'.format('--' * i, child.getText(T, end)))
+        print_tree(T, child, end, i)
 
 def get_text(args):
     if args.text is not None:
