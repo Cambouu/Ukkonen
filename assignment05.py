@@ -21,8 +21,13 @@ class Node():
             return T[self.suffixStart:self.suffixEnd]
 
     def splitNode(self, currentEdge, newEdge, activeLength, end):
+        currentChildren = self.children.copy()
+        self.children = {}
         self.addChild(currentEdge, activeLength + self.suffixStart)
+        self.children[currentEdge].children = currentChildren
+
         self.addChild(newEdge, end)
+
         self.suffixEnd = activeLength + self.suffixStart
 
     def addChild(self, edge, suffixStart, suffixEnd=-1, suffixLink=None):
@@ -76,6 +81,7 @@ def build_suffixtree(T):
 
                 elif c == edge_text[activeLength]:
                     activeLength += 1
+                    break
 
                 else:
                     childNode.splitNode(T[activeLength + childNode.suffixStart], c, activeLength, end) 
@@ -154,4 +160,4 @@ def main(args):
 if __name__=="__main__":
     
     main(get_argument_parser().parse_args())
-    # build_suffixtree('abac$')
+    # build_suffixtree('babacacb$')
