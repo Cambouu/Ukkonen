@@ -39,8 +39,8 @@ def build_suffixtree(T):
     - inner_nodes: list of number of inner nodes after each step
     """
     ST = Node(isRoot=True) # this should be your suffix tree
-    #leaves = []
-    #inner_nodes = []
+    leaves = []
+    inner_nodes = []
 
     remaining = 0
     activeNode = ST
@@ -92,11 +92,11 @@ def build_suffixtree(T):
                         activeNode = activeNode.suffixLink
 
 
-        #leaves_count, inners_count = count_leaves_and_inners(ST)
-        #leaves.append(leaves_count)
-        #inner_nodes.append(inners_count)
+        leaves_count, inners_count = count_leaves_and_inners(ST)
+        leaves.append(leaves_count)
+        inner_nodes.append(inners_count)
 
-    return ST#, leaves, inner_nodes
+    return ST, leaves, inner_nodes
 
 
 def count_leaves_and_inners(node):
@@ -152,5 +152,6 @@ def main(args):
     ST = test_suffixtree(T)
 
 if __name__=="__main__":
-    build_suffixtree('abac$')
-    # main(get_argument_parser().parse_args())
+    
+    main(get_argument_parser().parse_args())
+    # build_suffixtree('abac$')
