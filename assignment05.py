@@ -77,7 +77,7 @@ def build_suffixtree(T):
                     activeLength += 1
 
                 else:
-                    childNode.splitNode(T[activeLength + childNode.suffixStart], c, activeLength, end) #FIXME
+                    childNode.splitNode(T[activeLength + childNode.suffixStart], c, activeLength, end) 
                     remaining -= 1
 
                     if lastNodeSplitted is not None:
