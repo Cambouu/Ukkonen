@@ -17,9 +17,9 @@ class Node():
     def getText(self, T):
         return T[self.suffixStart:self.suffixEnd]
 
-    def splitNode(self, edge, length, end):
-        addChild(activeEdge, suffixStart=length, suffixEnd=-1, suffixLink=None)
-        addChild(activeEdge, suffixStart=end, suffixEnd=-1, suffixLink=None)
+    def splitNode(self, activeEdge, activeLength, end):
+        self.addChild(activeEdge, suffixStart=activeLength, suffixEnd=-1, suffixLink=None)
+        self.addChild(activeEdge, suffixStart=end, suffixEnd=-1, suffixLink=None)
         self.suffixEnd = activeLength
         return
 
@@ -62,7 +62,7 @@ def build_suffixtree(T):
                 if c == edge_text[activeLength]:
                     activeLength += 1
                 else:
-                    activeNode.splitNode(edge=activeEdge, length=activeLength, end=end) #TODO
+                    activeNode.splitNode(activeEdge, activeLength, end=end) #TODO
                     remaining -= 1
                     activeEdge = edge_text[1]
 
