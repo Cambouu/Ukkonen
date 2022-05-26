@@ -13,10 +13,16 @@ class Node():
         self.suffixLink = suffixLink
         self.isRoot = isRoot
         self.children = {}
-    
+
     def getText(self, T):
         return T[self.suffixStart:self.suffixEnd]
-    
+
+    def splitNode(self, edge, length, end):
+        addChild(activeEdge, suffixStart=length, suffixEnd=-1, suffixLink=None)
+        addChild(activeEdge, suffixStart=end, suffixEnd=-1, suffixLink=None)
+        self.suffixEnd = activeLength
+        return
+
     def addChild(self, edge, suffixStart, suffixEnd=-1, suffixLink=None):
         self.children[edge] = Node(suffixStart=suffixStart, suffixEnd=suffixEnd, suffixLink=self)
 
@@ -49,7 +55,7 @@ def build_suffixtree(T):
             else:
                 ST.addChild(c, suffixStart=end)
                 remaining -= 1
-        
+
         leaves_count, inners_count = count_leaves_and_inners(ST)
         leaves.append(leaves_count)
         inner_nodes.append(inners_count)
@@ -63,16 +69,16 @@ def count_leaves_and_inners(node):
 
     if len(node.children) == 0:
         leaves += 1
-    
+
     else:
         if not node.isRoot:
             inners += 1
-        
+
         for child in node.children.values():
             leaf, inner = count_leaves_and_inners(child)
             leaves += leaf
             inners += inner
-    
+
     return leaves, inners
 
 
@@ -93,7 +99,7 @@ def get_argument_parser():
     return p
 
 def main(args):
-    
+
     T = get_text(args)
     ST = test_suffixtree(T)
 
